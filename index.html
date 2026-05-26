@@ -108,8 +108,8 @@
     </section>
 
     <section id="info" class="py-12 bg-gray-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- 대상 -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 text-center">
                     <div class="w-14 h-14 bg-slate-100 text-primary rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
@@ -136,6 +136,15 @@
                     <p class="text-gray-900 font-bold text-sm">교육혁신·학생성공본부<br>교수학습혁신센터</p>
                     <p class="text-base font-bold text-secondary mt-1">043-649-7169</p>
                 </div>
+                <!-- 포스터 보기 (새로 추가됨) -->
+                <div onclick="openModal()" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 text-center cursor-pointer hover:shadow-lg hover:border-secondary hover:-translate-y-1 transition duration-300 group">
+                    <div class="w-14 h-14 bg-slate-100 text-primary group-hover:bg-secondary group-hover:text-white transition rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="text-sm font-bold mb-3 text-gray-400 tracking-widest">포스터</h3>
+                    <p class="text-lg font-bold text-gray-900 mt-2">포스터 원본 보기</p>
+                    <p class="text-sm text-secondary mt-2"><i class="fas fa-search-plus mr-1"></i>클릭하여 확대</p>
+                </div>
             </div>
         </div>
     </section>
@@ -153,7 +162,7 @@
                     <p class="text-gray-300 mb-10 text-lg">구글 폼을 통해 간편하게 세미나 참가 신청을 하실 수 있습니다.</p>
                     
                     <!-- 아래 href 안의 텍스트를 실제 구글 폼 링크로 변경해주세요 -->
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSctT5Yuxgr0fK45X7ulIOay--1Tf5LaBxv9y56sB-BaZ9eAkQ/viewform?usp=dialog" target="_blank" class="inline-flex items-center justify-center bg-accent text-primary text-xl font-bold px-10 py-4 rounded-xl hover:bg-white transition shadow-lg transform hover:-translate-y-1 w-full sm:w-auto">
+                    <a href="여기에_구글폼_링크를_넣어주세요" target="_blank" class="inline-flex items-center justify-center bg-accent text-primary text-xl font-bold px-10 py-4 rounded-xl hover:bg-white transition shadow-lg transform hover:-translate-y-1 w-full sm:w-auto">
                         <i class="fab fa-google mr-3"></i> 구글 폼으로 신청하기
                     </a>
                     
@@ -173,5 +182,56 @@
         </div>
     </footer>
 
+    <!-- 포스터 확대 모달 (새로 추가됨) -->
+    <div id="posterModal" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center">
+            <!-- 닫기 버튼 -->
+            <button onclick="closeModal()" class="absolute -top-12 right-0 md:-right-8 text-white/70 hover:text-white text-4xl focus:outline-none transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <!-- 포스터 이미지 영역 -->
+            <div class="overflow-y-auto max-h-[85vh] w-full rounded-xl shadow-2xl bg-white flex justify-center">
+                <!-- 첨부해주셨던 파일명과 동일하게 설정해 두었습니다. 같은 폴더에 이미지가 있으면 나타납니다. -->
+                <img src="2026학년도 3차 세미나 홍보포스터.jpg" alt="세미나 포스터" class="w-full h-auto block" onerror="this.src='https://via.placeholder.com/800x1130?text=Poster+Image+Not+Found'; this.onerror=null;">
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 동작 스크립트 -->
+    <script>
+        const modal = document.getElementById('posterModal');
+        
+        function openModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.classList.add('opacity-100');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // 팝업 시 배경 스크롤 방지
+        }
+        
+        function closeModal() {
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // 배경 스크롤 복구
+            }, 300);
+        }
+        
+        // 팝업 배경 클릭 시 닫기
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || (e.target.closest('.overflow-y-auto') === null && e.target.tagName !== 'IMG')) {
+                closeModal();
+            }
+        });
+        
+        // ESC 키 누를 때 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
